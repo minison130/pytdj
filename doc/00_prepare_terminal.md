@@ -1,4 +1,4 @@
-# terminal環境の構築
+#terminal環境の構築
 ## 行うこと
 * terminalの理解とmac bookでの起動
 * いくつかのコマンドを理解

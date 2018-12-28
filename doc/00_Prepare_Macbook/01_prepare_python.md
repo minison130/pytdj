@@ -1,3 +1,0 @@
-## Homebrewとpythonのインストール
-
-(TBC)
