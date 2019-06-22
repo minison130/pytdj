@@ -11,5 +11,4 @@ opt_port="-p 8888:8888"
 docker run -it \
   ${opt_mount} \
   ${opt_port} \
-  ${tag_name}
-
+  ${tag_name} 
