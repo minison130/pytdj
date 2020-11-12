@@ -1,17 +1,44 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y \
-    python-dev \
-    python-numpy \ 
-    python-opencv \
-    python-pip \ 
-    wget \
-    curl
+ENV PYTHON_VERSION 3.7.1
+ENV HOME /root
+ENV PYTHON_ROOT $HOME/local/python-$PYTHON_VERSION
+ENV PATH $PYTHON_ROOT/bin:$PATH
+ENV PYENV_ROOT $HOME/.pyenv
+
+RUN apt-get update \
+    && apt-get install -y \
+        git \
+        make \
+        build-essential \
+        libssl-dev \
+        zlib1g-dev \
+        libbz2-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        wget \
+        curl \
+        llvm \
+        libncurses5-dev \
+        libncursesw5-dev \
+        xz-utils \
+        tk-dev \
+        libffi-dev \
+        liblzma-dev \
+        libmtdev1 \
+        xclip \
+        xsel
+
+# install pyenv
+RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT
+RUN $PYENV_ROOT/plugins/python-build/install.sh
+RUN /usr/local/bin/python-build -v $PYTHON_VERSION $PYTHON_ROOT
+RUN rm -rf $PYENV_ROOT
 
 # install python-package
 RUN pip install --upgrade pip setuptools
 COPY requirements.txt ./requirements.txt
-RUN pip install -r ./requirements.txt
+RUN pip3 install -r ./requirements.txt
 
 EXPOSE 8888
 CMD jupyter notebook --ip=0.0.0.0 --allow-root
